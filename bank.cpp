@@ -21,6 +21,7 @@ public:
     void deposit();
     void withdraw();
     void transfer();
+    void payment();
 };
 void bank::menu() // define the function
 {
@@ -115,6 +116,7 @@ p:
         transfer();
         break;
     case 6:
+        payment();
         break;
     case 7:
         break;
@@ -280,6 +282,7 @@ void bank ::deposit()
                 file1 << " " << id << " " << name << " " << fname << " " << address << " " << pin << " " << pass << " " << phone << " " << balance << "\n";
                 found++;
                 cout << "\n\n\t\t\tYour Amounr " << dep << " Successfully Deposit...";
+                cout << "\n\nYour Current Balance Is : " << balance;
             }
             else
             {
@@ -376,16 +379,9 @@ void bank ::transfer()
         while (!file.eof())
         {
             if (s_id == id && amount <= balance)
-            {
-                found++;
-            }
+               { found++;}
             else if (r_id == id)
-            {
                 found++;
-            }
-            else
-            {
-            }
             file >> id >> name >> fname >> address >> pin >> pass >> phone >> balance;
         }
         file.close();
@@ -421,6 +417,64 @@ void bank ::transfer()
         else
         {
             cout << "\n\n\t\t\tBoth Tranction ID's & Balance Invalid..";
+        }
+    }
+}
+
+void bank::payment()
+{
+  system("cls");
+  fstream file,file1;
+  string t_id,b_name;
+  float amount;
+  int found = 0;
+  SYSTEMTIME x;
+  cout<<"\n\n\t\t\t Payment Option : ";
+  file.open("bank.txt",ios::in);
+   if (!file)
+    {
+      cout <<"\n\n File Opening Error...";
+    }
+    else
+    {
+        cout<<"\n\nEnter User ID : ";
+        cin>>t_id;
+        cout<<"\n\nBill Name :";
+        cin>>b_name;
+        cout<<"\n\nBill Amount :";
+        cin>>amount;
+        file1.open("bank1.txt",ios::app|ios::out);
+        file >> id >> name >> fname >> address >> pin >> pass >> phone >> balance;
+        while (!file.eof())
+        {
+            if(t_id == id && amount <= balance)
+            {
+              balance -= amount;
+              file1 << " " << id << " " << name << " " << fname << " " << address << " " << pin << " " << pass << " " << phone << " " << balance << "\n";
+              found ++;
+            }
+            else
+            {
+              file1 << " " << id << " " << name << " " << fname << " " << address << " " << pin << " " << pass << " " << phone << " " << balance << "\n";
+            }
+            file >> id >> name >> fname >> address >> pin >> pass >> phone >> balance;
+        }    
+        file.close();
+        file1.close();
+        remove("bank.txt");
+        rename("bank1.txt", "bank.txt");
+        if(found ==1)
+        {
+          GetSystemTime(&x);  
+          file.open("bill.txt",ios::app|ios::out);
+          file<<t_id<<" "<<b_name<<" "<<amount<<" "<<x.wDay<<"/"<<x.wMonth<<"/"<<x.wYear<<"\n";
+          file.close();
+          cout<<"\n\n\t\t\t" <<b_name << " Bill Pay Successfully... ";
+          cout<<"\n\n Your Current Balance Remaning After Bill Pay : "<<balance;
+        }
+        else
+        {
+          cout<<"\n\nUser ID or Amount Invalid... ";
         }
     }
 }

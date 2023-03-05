@@ -1,0 +1,4 @@
+d100 electricity 100 5/3 2023
+d200 gas 200 5/3 2023
+d100 water 50 5/3 /2023
+d200 recharge 50 5/3/2023
