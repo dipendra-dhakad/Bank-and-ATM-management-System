@@ -879,12 +879,13 @@ void bank ::withdraw_atm()
 }
 void bank ::check_detail()
 {
+    system("cls");
     fstream file;
     string t_id, t_pin, t_pass;
     int found = 0;
     char ch;
     float with;
-    system("cls");
+    
     cout << "\n\n\t\t\tChech Account Details";
     file.open("bank.txt", ios::in);
     if (!file)
