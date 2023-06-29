@@ -50,23 +50,24 @@ void introduction()
     cout << "\n\t";
     for (int i = 1; i <= 60; i++)
         cout << "*";
-    getch();
-    system("cls");
-    cout << "\n\n\n\t\t\t";
-    for (int i = 1; i <= 30; i++)
-        cout << "*";
-    cout << "\n\t\t\t";
-    for (int i = 1; i <= 30; i++)
-        cout << "*";
-    cout << "\n\n\t\t\t       My Name Is : ";
-    cout << "\n\n\t\t\t     Dipendra Dhakad ";
-    cout << "\n\n\t\t\t     B.tech (CSIT) ";
-    cout << "\n\n\t\t\t";
-    for (int i = 1; i <= 30; i++)
-        cout << "*";
-    cout << "\n\t\t\t";
-    for (int i = 1; i <= 30; i++)
-        cout << "*";
+    // getch();
+
+    // system("cls");
+    // cout << "\n\n\n\t\t\t";
+    // for (int i = 1; i <= 30; i++)
+    //     cout << "*";
+    // cout << "\n\t\t\t";
+    // for (int i = 1; i <= 30; i++)
+    //     cout << "*";
+    // cout << "\n\n\t\t\t       My Name Is : ";
+    // cout << "\n\n\t\t\t     Dipendra Dhakad ";
+    // cout << "\n\n\t\t\t     B.tech (CSIT) ";
+    // cout << "\n\n\t\t\t";
+    // for (int i = 1; i <= 30; i++)
+    //     cout << "*";
+    // cout << "\n\t\t\t";
+    // for (int i = 1; i <= 30; i++)
+    //     cout << "*";
     getch();
     system("cls");
     cout << "\n\n\t";
@@ -79,7 +80,7 @@ void introduction()
     cout << "\n\n\t Name : \t\t Dipendra Dhakad";
     cout << "\n\t Degree: \t\t B.Tech (CSIT)";
     cout << "\n\t Institude: \t\t IES IPS Academy,Indore";
-    cout << "\n\t E-mail: \t\t dhakaddipendradhakad@gmail.com";
+    cout << "\n\t E-mail: \t\t dipdhakad01@gmail.com";
     cout << "\n\t Contact No \t\t 7566378530";
     cout << "\n\n\t";
     for (int i = 1; i <= 60; i++)
@@ -849,15 +850,12 @@ void bank ::withdraw_atm()
                 {
                     balance -= with;
                     file1 << " " << id << " " << name << " " << fname << " " << address << " " << pin << " " << pass << " " << phone << " " << balance << "\n";
-                    found++;
                     cout << "\n\n\t\t\tYour Amount " << with << " Successfully Withdraw...";
                     cout << "\n\nYour Current Balance Is : " << balance;
                 }
                 else
                 {
-                    found++;
-                    file1 << " " << id << " " << name << " " << fname << " " << address << " " << pin << " " << pass << " " << phone << " " << balance << "\n";
-                    found++;
+                    file1 << " " << id << " " << name << " " << fname << " " << address << " " << pin << " " << pass << " " << phone << " " << balance << "\n";  ;
                     cout << "\n\n\t\t\tInsufficient Balance...";
                     cout << "\n\n\t\t\t Your Current Balance " << balance << "Is Less...";
                 }
@@ -879,15 +877,14 @@ void bank ::withdraw_atm()
 }
 void bank ::check_detail()
 {
-    system("cls");
-    fstream file;
+   
+    ifstream file;
     string t_id, t_pin, t_pass;
     int found = 0;
     char ch;
-    float with;
-    
+    system("cls");
     cout << "\n\n\t\t\tChech Account Details";
-    file.open("bank.txt", ios::in);
+    file.open("bank.txt");
     if (!file)
     {
         cout << "\n\n File Opening Error...";
@@ -910,8 +907,8 @@ void bank ::check_detail()
             t_pass += ch;
             cout << "*";
         }
-        file >> id >> name >> fname >> address >> pin >> pass >> phone >> balance;
-        while (!file.eof())
+
+        while (file>>id>>name>>fname>>address>>pin>>pass>>phone>>balance)
         {
             if (t_id == id && t_pin == pin && t_pass == pass)
             {
@@ -926,11 +923,10 @@ void bank ::check_detail()
                 cout << "\n Current Balance : " << balance;
                 found++;
             }
-            file >> id >> name >> fname >> address >> pin >> pass >> phone >> balance;
-            file.close();
+        }
+         file.close();
             if (found == 0)
               cout << "\n\n User ID Can't Found...";
-        }
     }
 }
 int main()
